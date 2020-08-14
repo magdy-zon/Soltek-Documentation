@@ -258,6 +258,9 @@
                   <li>
                     <a href="#recuperar-contrasena" class="toc-h2 toc-link" data-title="Recuperar contraseña">Recuperar contraseña</a>
                   </li>
+                  <li>
+                    <a href="#refresh-firebase-id" class="toc-h2 toc-link" data-title="Refresh Firebase id">Refresh Firebase id</a>
+                  </li>
               </ul>
           </li>
           <li>
@@ -335,6 +338,9 @@
                   </li>
                   <li>
                     <a href="#inicializar-instalacion" class="toc-h2 toc-link" data-title="Inicializar Instalación">Inicializar Instalación</a>
+                  </li>
+                  <li>
+                    <a href="#actualizar-instalacion" class="toc-h2 toc-link" data-title="Actualizar Instalación">Actualizar Instalación</a>
                   </li>
                   <li>
                     <a href="#mostrar-instalacion" class="toc-h2 toc-link" data-title="Mostrar Instalación">Mostrar Instalación</a>
@@ -778,8 +784,11 @@
 <pre class="highlight java tab-java"><code><span class="o">{</span>
     <span class="s">"name"</span><span class="o">:</span> <span class="s">"Test"</span><span class="o">,</span>
     <span class="s">"last_name"</span><span class="o">:</span> <span class="s">"Doc Edited"</span><span class="o">,</span>
+    <span class="s">"driver_id"</span><span class="o">:</span> <span class="mi">12345</span><span class="o">,</span>
+    <span class="s">"base_id"</span><span class="o">:</span> <span class="mi">12345</span><span class="o">,</span>
     <span class="s">"password"</span><span class="o">:</span> <span class="s">"123Qwe1"</span><span class="o">,</span>
-    <span class="s">"password_confirmation"</span><span class="o">:</span> <span class="s">"123Qwe1"</span>
+    <span class="s">"password_confirmation"</span><span class="o">:</span> <span class="s">"123Qwe1"</span><span class="o">,</span>
+    <span class="s">"image"</span><span class="o">:</span>
 <span class="o">}</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
     <span class="s2">"success"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
@@ -833,27 +842,42 @@
 <tr>
 <td>name</td>
 <td>String</td>
-<td>0</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>last_name</td>
 <td>String</td>
-<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>driver_id</td>
+<td>String</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>base_id</td>
+<td>String</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>email</td>
 <td>String</td>
-<td>0</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>password</td>
 <td>String</td>
-<td>0</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>password_confirmation</td>
 <td>String</td>
-<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>image1</td>
+<td>File</td>
+<td>Optional</td>
 </tr>
 </tbody></table>
 <h2 id='recuperar-contrasena'>Recuperar contraseña</h2>
@@ -916,7 +940,74 @@
 <tr>
 <td>email</td>
 <td>String</td>
-<td>1</td>
+<td>Obligatorio</td>
+</tr>
+</tbody></table>
+<h2 id='refresh-firebase-id'>Refresh Firebase id</h2>
+<blockquote>
+<p>Response:</p>
+</blockquote>
+<pre class="highlight java tab-java"><code><span class="o">{</span>
+    <span class="s">"refresh_token"</span><span class="o">:</span> <span class="s">"ajfWn3fl..."</span>
+    <span class="s">"firebase_id"</span><span class="o">:</span> <span class="s">"2$kd0nsO..."</span>
+    <span class="s">"email"</span><span class="o">:</span> <span class="s">"test@email.com"</span>
+<span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"success"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">""</span><span class="p">,</span>
+    <span class="s2">"data"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="p">{</span>
+    <span class="s">"success"</span><span class="p">:</span> <span class="m">0</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">:</span> <span class="s">"Hace falta enviar el firebase_id"</span><span class="p">,</span>
+    <span class="s">"data"</span><span class="p">:</span> <span class="k">null</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s">"success"</span><span class="p">:</span> <span class="m">0</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">:</span> <span class="s">"Unauthenticated"</span><span class="p">,</span>
+    <span class="s">"data"</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+</code></pre><h3 id='description'>Description</h3>
+<p>Este endpoint toma el refresh_token para actualizar el firebase id del correo que se le manda en el Request.
+Si el refresh token es incorrecto marca error de sesión.</p>
+
+<table><thead>
+<tr>
+<th>HTTP Request</th>
+<th>Name Endpoint</th>
+<th>Endpoint</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>restore password</td>
+<td>{{url}}/api/restore_password</td>
+</tr>
+</tbody></table>
+<h3 id='headers-6'>Headers</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Autorization</td>
+<td>Bearer eyJ0eXAiOiJKV1Q...</td>
+</tr>
+</tbody></table>
+<h3 id='body-7'>Body</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+<th>Mandatory</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>email</td>
+<td>String</td>
+<td>Obligatorio</td>
 </tr>
 </tbody></table>
 <h1 id='drivers'>Drivers</h1><h2 id='crear-chofer'>Crear Chofer</h2>
@@ -956,7 +1047,7 @@
     <span class="s">"message"</span><span class="p">:</span> <span class="s">"No se pudo crear el chofer"</span><span class="p">,</span>
     <span class="s">"data"</span><span class="p">:</span> <span class="k">null</span>
 <span class="p">}</span>
-</code></pre><h3 id='description'>Description</h3>
+</code></pre><h3 id='description-2'>Description</h3>
 <p>Crea a un usuario tipo &quot;Chofer&quot; y lo asocia a una compañía en específico.</p>
 <h3 id='request'>Request</h3>
 <table><thead>
@@ -972,7 +1063,7 @@
 <td>{{url}}/api/create_driver</td>
 </tr>
 </tbody></table>
-<h3 id='headers-6'>Headers</h3>
+<h3 id='headers-7'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -984,7 +1075,7 @@
 <td>Bearer eyJ0eXAiOiJK...</td>
 </tr>
 </tbody></table>
-<h3 id='body-7'>Body</h3>
+<h3 id='body-8'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -994,10 +1085,16 @@
 </tr>
 </thead><tbody>
 <tr>
-<td>full_name</td>
+<td>name</td>
 <td>String</td>
 <td>Obligatorio</td>
-<td>Nombre completo del chofer.</td>
+<td>Nombre del chofer.</td>
+</tr>
+<tr>
+<td>last_name</td>
+<td>String</td>
+<td>Obligatorio</td>
+<td>Apellido del chofer.</td>
 </tr>
 <tr>
 <td>driver_number</td>
@@ -1060,7 +1157,7 @@
 <td>{{url}}/api/staff/manage_user</td>
 </tr>
 </tbody></table>
-<h3 id='headers-7'>Headers</h3>
+<h3 id='headers-8'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1072,7 +1169,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-8'>Body</h3>
+<h3 id='body-9'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1085,13 +1182,13 @@
 <td>user_id</td>
 <td>String</td>
 <td>ID en forma encriptada del usuario.</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 <tr>
 <td>status</td>
 <td>Int</td>
 <td>1 para activar usuario, 2 para suspender y 3 para eliminar usuario.</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 </tbody></table>
 <h2 id='mostrar-choferes'>Mostrar choferes</h2>
@@ -1158,7 +1255,7 @@
 <td>{{url}}/api/staff/show-drivers/{companyId}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-8'>Headers</h3>
+<h3 id='headers-9'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1170,7 +1267,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-9'>Body</h3>
+<h3 id='body-10'>Body</h3>
 <p>No requerido</p>
 <h2 id='actualizar-chofer'>Actualizar chofer</h2>
 <blockquote>
@@ -1200,7 +1297,7 @@
     <span class="s">"message"</span><span class="p">:</span> <span class="s">"Hacen falta datos para completar el registro"</span><span class="p">,</span>
     <span class="s">"data"</span><span class="p">:</span> <span class="k">null</span>
 <span class="p">}</span>
-</code></pre><h3 id='description-2'>Description</h3>
+</code></pre><h3 id='description-3'>Description</h3>
 <p>Actualiza la información de un usuario tipo &quot;Chofer&quot;.</p>
 <h3 id='request-2'>Request</h3>
 <table><thead>
@@ -1216,7 +1313,7 @@
 <td>{{url}}/api/staff/update/driver</td>
 </tr>
 </tbody></table>
-<h3 id='headers-9'>Headers</h3>
+<h3 id='headers-10'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1228,7 +1325,7 @@
 <td>Bearer eyJ0eXAiOiJK...</td>
 </tr>
 </tbody></table>
-<h3 id='body-10'>Body</h3>
+<h3 id='body-11'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1323,7 +1420,7 @@
 <td>{{url}}/api/staff/get-base/{companyId}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-10'>Headers</h3>
+<h3 id='headers-11'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1335,7 +1432,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-11'>Body</h3>
+<h3 id='body-12'>Body</h3>
 <p>No aplica</p>
 <h1 id='vehicles'>Vehicles</h1><h2 id='mostrar-marcas-y-modelos'>Mostrar marcas y modelos</h2>
 <blockquote>
@@ -1392,7 +1489,7 @@
 <td>{{url}}/api/staff/catalog-vehicles</td>
 </tr>
 </tbody></table>
-<h3 id='headers-11'>Headers</h3>
+<h3 id='headers-12'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1404,7 +1501,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-12'>Body</h3>
+<h3 id='body-13'>Body</h3>
 <p>No requerido</p>
 <h2 id='crear-vehiculo'>Crear vehículo</h2>
 <blockquote>
@@ -1441,7 +1538,7 @@
 <td>{{url}}/api/staff/vehicle</td>
 </tr>
 </tbody></table>
-<h3 id='headers-12'>Headers</h3>
+<h3 id='headers-13'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1453,7 +1550,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-13'>Body</h3>
+<h3 id='body-14'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1464,32 +1561,32 @@
 <tr>
 <td>vehicle_id</td>
 <td>Numero de serie</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 <tr>
 <td>tanks</td>
 <td>Numero de tanques</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 <tr>
 <td>vehicle_economic</td>
 <td>Numero económico</td>
-<td>0</td>
+<td>Opcional</td>
 </tr>
 <tr>
 <td>fk_vehicle_model</td>
 <td>Modelo ID</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 <tr>
 <td>base_id</td>
 <td>Base ID</td>
-<td>0</td>
+<td>Opcional</td>
 </tr>
 <tr>
 <td>company_id</td>
 <td>Compañía asociada</td>
-<td>0</td>
+<td>Opcional</td>
 </tr>
 </tbody></table>
 
@@ -1526,7 +1623,7 @@
 <td>{{url}}/api/staff/manage_vehicle</td>
 </tr>
 </tbody></table>
-<h3 id='headers-13'>Headers</h3>
+<h3 id='headers-14'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1538,7 +1635,7 @@
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-14'>Body</h3>
+<h3 id='body-15'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1549,12 +1646,12 @@
 <tr>
 <td>vehicle_id</td>
 <td>ID encriptado del vehículo a eliminar</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 <tr>
 <td>status</td>
 <td>1 si se requiere activar, 2 si se requiere suspender y 3 para eliminar</td>
-<td>1</td>
+<td>Obligatorio</td>
 </tr>
 </tbody></table>
 <h2 id='mostrar-vehiculos'>Mostrar vehículos</h2>
@@ -1647,7 +1744,7 @@
 <td>{{url}}/api/staff/vehicle/{companyId}/{vehicleId}/{userId}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-14'>Headers</h3>
+<h3 id='headers-15'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1697,7 +1794,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>{{url}}/api/staff/vehicle/{vehicleId}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-15'>Headers</h3>
+<h3 id='headers-16'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1711,7 +1808,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 </tbody></table>
 <h3 id='url-3'>URL</h3>
 <p>Es necesario pasar vehicle_id (ID de vehiculo, NO numero de serie) al final de la URL del endpoint</p>
-<h3 id='body-15'>Body</h3>
+<h3 id='body-16'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1785,7 +1882,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>{{url}}/api/staff/show-companies/2</td>
 </tr>
 </tbody></table>
-<h3 id='headers-16'>Headers</h3>
+<h3 id='headers-17'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1797,7 +1894,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-16'>Body</h3>
+<h3 id='body-17'>Body</h3>
 <p>No aplica</p>
 <h1 id='notifications'>Notifications</h1><h2 id='mostrar-notificaciones'>Mostrar notificaciones</h2>
 <blockquote>
@@ -1878,7 +1975,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>{{url}}/api/get-push?page={PAGE}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-17'>Headers</h3>
+<h3 id='headers-18'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -1890,7 +1987,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-17'>Body</h3>
+<h3 id='body-18'>Body</h3>
 <p>No aplica</p>
 <h3 id='type'>Type</h3>
 <table><thead>
@@ -2079,7 +2176,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>{{url}}/api/staff/update-notification-status</td>
 </tr>
 </tbody></table>
-<h3 id='headers-18'>Headers</h3>
+<h3 id='headers-19'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2091,7 +2188,7 @@ Si se desea consultar información de compañías, vehículos o usuario en espec
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-18'>Body</h3>
+<h3 id='body-19'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2160,7 +2257,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/get-without-supervision</td>
 </tr>
 </tbody></table>
-<h3 id='headers-19'>Headers</h3>
+<h3 id='headers-20'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2172,7 +2269,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-19'>Body</h3>
+<h3 id='body-20'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2234,7 +2331,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/cat-security-kit-list</td>
 </tr>
 </tbody></table>
-<h3 id='headers-20'>Headers</h3>
+<h3 id='headers-21'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2246,7 +2343,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-20'>Body</h3>
+<h3 id='body-21'>Body</h3>
 <p>No aplica</p>
 <h2 id='inicializar-instalacion'>Inicializar Instalación</h2>
 <blockquote>
@@ -2280,7 +2377,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/create-install</td>
 </tr>
 </tbody></table>
-<h3 id='headers-21'>Headers</h3>
+<h3 id='headers-22'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2292,7 +2389,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-21'>Body</h3>
+<h3 id='body-22'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2311,6 +2408,91 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>vehicle_id</td>
 <td>ID Tokenizado del vehículo para realizar la instalación</td>
 <td>String</td>
+<td>Obligatorio</td>
+</tr>
+</tbody></table>
+<h2 id='actualizar-instalacion'>Actualizar Instalación</h2>
+<blockquote>
+<p>Actualizar Instalación:</p>
+</blockquote>
+<pre class="highlight java tab-java"><code><span class="o">{</span>
+    <span class="s">"foliate_stamp"</span><span class="o">:</span> <span class="o">[</span><span class="s">"1111"</span><span class="o">,</span><span class="s">"2222"</span><span class="o">,</span><span class="s">"3333"</span><span class="o">],</span>
+    <span class="s">"image"</span><span class="o">:</span> <span class="n">$FILE</span><span class="o">,</span>
+    <span class="s">"vehicle_installation_point"</span><span class="o">:</span> <span class="mi">70</span>
+<span class="o">}</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="p">{</span>
+    <span class="s2">"success"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">"message"</span><span class="p">:</span> <span class="s2">"Instalación completada"</span><span class="p">,</span>
+    <span class="s2">"data"</span><span class="p">:</span> <span class="kc">null</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight csharp tab-csharp"><code><span class="p">{</span>
+    <span class="s">"success"</span><span class="p">:</span> <span class="m">0</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">:</span> <span class="s">"Hacen falta datos para atender la peticion"</span><span class="p">,</span>
+    <span class="s">"data"</span><span class="p">:</span> <span class="k">null</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s">"success"</span><span class="p">:</span> <span class="m">0</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">:</span> <span class="s">"El punto de instalación no existe"</span><span class="p">,</span>
+    <span class="s">"data"</span><span class="p">:</span> <span class="k">null</span>
+<span class="p">}</span>
+<span class="p">{</span>
+    <span class="s">"success"</span><span class="p">:</span> <span class="m">0</span><span class="p">,</span>
+    <span class="s">"message"</span><span class="p">:</span> <span class="s">"Unauthenticated"</span><span class="p">,</span>
+    <span class="s">"data"</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+</code></pre><h3 id='descripcion-3'>Descripción</h3>
+<p>Este endpoint actualiza un punto de instalación existente respecto de los datos que se le envían. Devuelve la imagen asociada al punto de instalación.</p>
+
+<table><thead>
+<tr>
+<th>HTTP Request</th>
+<th>Name Endpoint</th>
+<th>Endpoint</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>POST</td>
+<td>update install</td>
+<td>{{url}}/api/install/update-install</td>
+</tr>
+</tbody></table>
+<h3 id='headers-23'>Headers</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Value</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Authorization</td>
+<td>Bearer eyJ0eXAiOiJKV1Q...</td>
+</tr>
+</tbody></table>
+<h3 id='body-23'>Body</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Descripción</th>
+<th>Type</th>
+<th>Mandatory</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>foliate_stamp</td>
+<td>Arreglo para enviar el sello foliado de un kit de instalación</td>
+<td>Array</td>
+<td>Obligatorio</td>
+</tr>
+<tr>
+<td>image</td>
+<td>File de fotografá actualizada del kit de instalación</td>
+<td>String</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>vehicle_installation_point</td>
+<td>el Id del kit de instalación a actualizar</td>
+<td>Int</td>
 <td>Obligatorio</td>
 </tr>
 </tbody></table>
@@ -2404,7 +2586,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/show-installation/{{vehicleId}}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-22'>Headers</h3>
+<h3 id='headers-24'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2416,7 +2598,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-22'>Body</h3>
+<h3 id='body-24'>Body</h3>
 <p>No requerido.</p>
 <h2 id='remover-punto'>Remover punto</h2>
 <blockquote>
@@ -2449,7 +2631,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/remove-installation-point</td>
 </tr>
 </tbody></table>
-<h3 id='headers-23'>Headers</h3>
+<h3 id='headers-25'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2461,7 +2643,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-23'>Body</h3>
+<h3 id='body-25'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2511,7 +2693,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/create-install-others</td>
 </tr>
 </tbody></table>
-<h3 id='headers-24'>Headers</h3>
+<h3 id='headers-26'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2523,7 +2705,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-24'>Body</h3>
+<h3 id='body-26'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2599,7 +2781,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/create-supervision</td>
 </tr>
 </tbody></table>
-<h3 id='headers-25'>Headers</h3>
+<h3 id='headers-27'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2611,7 +2793,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-25'>Body</h3>
+<h3 id='body-27'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2687,7 +2869,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/update-supervision</td>
 </tr>
 </tbody></table>
-<h3 id='headers-26'>Headers</h3>
+<h3 id='headers-28'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2699,7 +2881,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-26'>Body</h3>
+<h3 id='body-28'>Body</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2775,7 +2957,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>{{url}}/api/install/get-supervision/{{vehicleId}</td>
 </tr>
 </tbody></table>
-<h3 id='headers-27'>Headers</h3>
+<h3 id='headers-29'>Headers</h3>
 <table><thead>
 <tr>
 <th>Key</th>
@@ -2787,7 +2969,7 @@ Este servicio solo puede ser utilizado con la notificación del tipo NOT_SUPERVI
 <td>Bearer eyJ0eXAiOiJKV1Q...</td>
 </tr>
 </tbody></table>
-<h3 id='body-27'>Body</h3>
+<h3 id='body-29'>Body</h3>
 <p>No requerido</p>
 
       </div>
